@@ -1,0 +1,48 @@
+<h3>Report an issue</h3>
+
+<form clrForm *ngIf="issueForm" [formGroup]="issueForm" (ngSubmit)="addIssue()">
+    <clr-input-container>
+      <label>Title</label>
+      <input clrInput type="text" formControlName="title" name="title" />
+      <clr-control-error *clrIfError="'required'">title is required</clr-control-error>
+      <clr-control-error *clrIfError="'maxlength'; error as err">please provide a valid issue name</clr-control-error>
+    </clr-input-container>
+
+    <clr-textarea-container>
+      <label>Description (Optional)</label>
+        <textarea clrTextarea formControlName="description" name="description"></textarea>
+        <clr-control-helper>(max 250 characters)</clr-control-helper>
+    </clr-textarea-container>
+
+    <clr-radio-container clrInline>
+       <label>Priority</label>
+        <clr-radio-wrapper>
+            <input type="radio" clrRadio name="priority" value="low" formControlName="priority" />
+            <label>Low</label>
+        </clr-radio-wrapper>
+        <clr-radio-wrapper>
+            <input type="radio" clrRadio name="priority" value="high" formControlName="priority" />
+            <label>High</label>
+        </clr-radio-wrapper>
+        <clr-control-error>please choose a issue priority</clr-control-error>
+    </clr-radio-container>
+
+    <clr-select-container>
+        <label>Type</label>
+        <select clrSelect formControlName="type">
+            <option value="Feature">Feature</option>
+            <option value="Bug">Bug</option>
+            <option value="Documentation">Documentation</option>
+        </select>
+        <clr-control-error>please select a issue feature</clr-control-error>
+    </clr-select-container>
+   
+    <button class="btn btn-primary" type="submit" [disabled]="!issueForm.valid">Create</button>
+    <button class="btn" type="button" (click)="formClose.emit()">Cancel</button>
+    
+    <p>FormValue:</p> 
+    <pre>{{issueForm.value | json}}</pre>
+
+
+    
+  </form>
