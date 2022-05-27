@@ -20,4 +20,12 @@ export class IssuesService {
     this.issues.push(issue);
    }
 
+  completeIssue(issue: Issue) {
+    const completedIssue : Issue = {
+      ...issue,
+      completed: new Date()
+    }
+    const index = this.issues.findIndex(i => i ===  issue);
+    this.issues[index] = completedIssue
+  }
 }

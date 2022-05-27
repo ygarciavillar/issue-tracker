@@ -1,4 +1,3 @@
-
 <ng-container *ngIf="showReportIssue == false">
     <button class="btn btn-primary" (click)="showReportIssue = true">Create Issue</button>
     <clr-datagrid>
@@ -20,6 +19,11 @@
         </clr-dg-column>
         <!-- Rows -->
         <clr-dg-row *clrDgItems="let issue of issues">
+            <clr-dg-action-overflow>
+                <button class="action-item" (click)="selectedIssue = issue">
+                    Resolve
+                </button>
+            </clr-dg-action-overflow>
             <clr-dg-cell>{{issue.issueNo}}</clr-dg-cell>
             <clr-dg-cell>{{issue.type}}</clr-dg-cell>
             <clr-dg-cell>{{issue.title}}</clr-dg-cell>
@@ -36,4 +40,9 @@
 </ng-container>
 
 <app-issue-report *ngIf="showReportIssue" (formClose)="onCloseReport()"></app-issue-report>
-
+<app-confirm-dialog *ngIf="selectedIssue" 
+        [issueNo]="selectedIssue.issueNo"
+        (confirm)="onConfirm($event)"
+        >
+        
+    </app-confirm-dialog>

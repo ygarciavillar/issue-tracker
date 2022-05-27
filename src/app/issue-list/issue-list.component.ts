@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Issue } from '../issue';
 import { IssuesService } from '../issues.service';
 
@@ -11,6 +11,7 @@ export class IssueListComponent implements OnInit {
   
   issues: Issue[] = [];
   showReportIssue: boolean = false;
+  selectedIssue: Issue | null = null;
 
   constructor(private issueService: IssuesService) { }
 
@@ -18,10 +19,20 @@ export class IssueListComponent implements OnInit {
     this.getIssues()
   }
 
+
   onCloseReport(){
     this.showReportIssue = false;
     this.getIssues()
   }
+
+  onConfirm(confirmed: boolean) {
+    if (confirmed && this.selectedIssue) {
+    this.issueService.completeIssue(this.
+    selectedIssue);
+    this.getIssues();
+    }
+    this.selectedIssue = null;
+    }
 
   getIssues() {
     this.issues = this.issueService.getPendingIssues()
